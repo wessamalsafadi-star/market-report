@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dubai Real Estate Market Report 2026 — Better Homes</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sand: #ede8e4;
+    --sand-mid: #EDE3D4;
+    --sand-dark: #D9C9B0;
+    --coral: #1f343f;
+    --coral-light: #1f343f;
+    --dark: #1A1A1A;
+    --mid: #5A5A5A;
+    --light: #8A8A8A;
+    --white: #FFFFFF;
+    --off-white: #FAFAF8;
+    --border: #E8E0D4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--white);
+    color: var(--dark);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+  
+  /* ── HEADER ── */
+  .header {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-logo {
+    font-family: 'Jost', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--dark);
+  }
+
+  .header-logo span {
+    color: var(--coral);
+  }
+
+  .header-meta {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--light);
+  }
+
+  /* ── COVER ── */
+  .cover {
+    background: var(--sand);
+    padding: 100px 60px 80px;
+    position: relative;
+    overflow: hidden;
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .cover-bg-text {
+    position: absolute;
+    top: 40px; right: -20px;
+    font-family: Epic,Inter,system-ui,sans-serif;
+    font-size: 220px;
+    font-weight: 400;
+    color: rgba(0,0,0,0.04);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .cover-eyebrow {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 20px;
+    font-weight: 400;
+  }
+
+  .cover-title {
+    font-family: 'Epic,Inter,system-ui,sans-serif', serif;
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 400;
+    line-height: 1.05;
+    color: var(--dark);
+    margin-bottom: 24px;
+  }
+
+  .cover-title em {
+    font-style: italic;
+    color: var(--coral);
+  }
+
+  .cover-line {
+    width: 48px;
+    height: 2px;
+    background: var(--coral);
+    margin-bottom: 28px;
+  }
+
+  .cover-intro {
+    max-width: 540px;
+    font-size: 15px;
+    color: var(--mid);
+    line-height: 1.8;
+    margin-bottom: 60px;
+    font-weight: 300;
+  }
+
+  .cover-stats {
+    display: flex;
+    gap: 0;
+    border-top: 1px solid var(--sand-dark);
+    padding-top: 40px;
+  }
+
+  .cover-stat {
+    padding-right: 48px;
+    margin-right: 48px;
+    border-right: 1px solid var(--sand-dark);
+  }
+
+  .cover-stat:last-child {
+    border-right: none;
+  }
+
+  .cover-stat-num {
+    font-family: 'Epic,Inter,system-ui,sans-serif', serif;
+    font-size: 36px;
+    font-weight: 400;
+    color: var(--dark);
+    line-height: 1;
+  }
+
+  .cover-stat-label {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-top: 6px;
+    font-weight: 400;
+  }
+
+  /* ── PAGE ── */
+  .page {
+    /*max-width: 1000px;*/
+    margin: 0 auto;
+    padding: 80px 60px;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    margin-bottom: 100px;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 16px;
+    font-weight: 400;
+  }
+
+  .section-title {
+    font-family: 'Epic,Inter,system-ui,sans-serif', serif;
+    font-size: clamp(30px, 4vw, 48px);
+    font-weight: 400;
+    color: var(--dark);
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--coral);
+  }
+
+  .section-intro {
+    font-size: 15px;
+    color: var(--mid);
+    max-width: 600px;
+    margin-bottom: 48px;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  /* ── STAT CARDS ── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 60px;
+  }
+
+  .stat-card {
+    background: var(--white);
+    padding: 36px 28px;
+    transition: background 0.2s;
+  }
+
+  .stat-card:hover {
+    background: var(--off-white);
+  }
+
+  .stat-number {
+    font-family: 'Epic,Inter,system-ui,sans-serif', serif;
+    font-size: 44px;
+    font-weight: 400;
+    color: var(--dark);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+
+  .stat-unit {
+    font-size: 20px;
+    color: var(--coral);
+  }
+
+  .stat-desc {
+    font-size: 12px;
+    color: var(--mid);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .stat-context {
+    font-size: 11px;
+    color: var(--coral);
+    margin-top: 8px;
+    font-weight: 400;
+  }
+
+  /* ── CHART ── */
+  .chart-container {
+    background: var(--off-white);
+    border: 1px solid var(--border);
+    padding: 40px;
+    margin-bottom: 24px;
+  }
+
+  .chart-title {
+    font-family: 'Epic,Inter,system-ui,sans-serif', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--dark);
+    margin-bottom: 4px;
+  }
+
+  .chart-subtitle {
+    font-size: 11px;
+    color: var(--light);
+    margin-bottom: 32px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .chart-source {
+    font-size: 10px;
+    color: var(--light);
+    margin-top: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  canvas { max-height: 300px; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+
+  /* ── INSIGHT ── */
+  .insight {
+    border-left: 3px solid var(--coral);
+    padding: 28px 36px;
+    background: var(--sand);
+    margin: 48px 0;
+  }
+
+  .insight-text {
+    font-family: 'Epic,Inter,system-ui,sans-serif', serif;
+    font-size: 19px;
+    font-style: italic;
+    color: var(--dark);
+    line-height: 1.7;
+    font-weight: 400;
+  }
+
+  /* ── TABLE ── */
+  .community-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 32px;
+  }
+
+  .community-table th {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--coral);
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 2px solid var(--border);
+    font-weight: 400;
+    font-family: 'Jost', sans-serif;
+  }
+
+  .community-table td {
+    padding: 16px 16px;
+    font-size: 13px;
+    color: var(--mid);
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+    font-weight: 300;
+  }
+
+  .community-table tr:hover td { background: var(--off-white); }
+
+  .community-table td:first-child {
+    color: var(--dark);
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 12px;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+
+  .badge-up { background: rgba(192,57,43,0.08); color: var(--coral); }
+  .badge-hot { background: var(--sand); color: var(--dark); }
+
+  .bar-inline { display: flex; align-items: center; gap: 10px; }
+  .bar-track { flex: 1; height: 3px; background: var(--border); }
+  .bar-fill { height: 100%; background: var(--coral); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 80px 0;
+  }
+
+  /* ── SECTION BREAK ── */
+  .section-break {
+    background: var(--dark);
+    padding: 80px 60px;
+    margin: 80px -60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section-break::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+  }
+
+  .section-break-text {
+    font-family: 'Epic,Inter,system-ui,sans-serif', serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 400;
+    color: var(--white);
+    line-height: 1.3;
+    position: relative;
+  }
+
+  .section-break-text em {
+    font-style: italic;
+    color: var(--sand-mid);
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--sand);
+    padding: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-top: 1px solid var(--sand-dark);
+  }
+
+  .footer-brand {
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--dark);
+    font-weight: 500;
+  }
+
+  .footer-brand span { color: var(--coral); }
+
+  .footer-note {
+    font-size: 11px;
+    color: var(--light);
+    text-align: right;
+    max-width: 360px;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* ── HIGHLIGHT BAND ── */
+  .highlight-band {
+    background: var(--coral);
+    color: var(--white);
+    padding: 48px 60px;
+    margin: 60px -60px;
+    display: flex;
+    align-items: center;
+    gap: 60px;
+  }
+
+  .highlight-band-num {
+    font-family: 'Epic,Inter,system-ui,sans-serif', serif;
+    font-size: 64px;
+    font-weight: 400;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  .highlight-band-text {
+    font-size: 16px;
+    line-height: 1.7;
+    font-weight: 300;
+    opacity: 0.9;
+    max-width: 500px;
+  }
+
+  @media (max-width: 700px) {
+    .header { padding: 16px 24px; }
+    .cover { padding: 60px 24px 48px; }
+    .cover-stats { flex-wrap: wrap; gap: 24px; }
+    .cover-stat { border-right: none; padding-right: 0; margin-right: 0; }
+    .page { padding: 60px 24px; }
+    .two-col { grid-template-columns: 1fr; }
+    .footer { flex-direction: column; gap: 24px; padding: 40px 24px; }
+    .footer-note { text-align: left; }
+    .section-break { margin: 60px -24px; padding: 48px 24px; }
+    .highlight-band { margin: 40px -24px; padding: 40px 24px; flex-direction: column; gap: 16px; }
+    .cover-bg-text { font-size: 120px; }
+    .chart-container{width: fit-content !important; padding: 20px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-logo"><img src="./bh-ramadan-logo-darkpng-0157dac6-eb9e-4b18-b045-9d65bbbf14d4.avif" width="150"></div>
+  <div class="header-meta">Dubai Real Estate Report · 2026</div>
+</div>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-bg-text">2026</div>
+  <div class="cover-eyebrow">Annual Market Report</div>
+  <div class="cover-title">Dubai Real Estate<br><em>Market 2026</em></div>
+  <div class="cover-line"></div>
+  <div class="cover-intro">
+    A data-led analysis of Dubai's residential market: sales volumes, price movements, rental performance, and community-level trends drawn from Dubai Land Department records and PropertyMonitor.
+  </div>
+  <div class="cover-stats">
+    <div class="cover-stat">
+      <div class="cover-stat-num">AED 541B</div>
+      <div class="cover-stat-label">Total Sales Value 2025</div>
+    </div>
+    <div class="cover-stat">
+      <div class="cover-stat-num">200K+</div>
+      <div class="cover-stat-label">Transactions in 2025</div>
+    </div>
+    <div class="cover-stat">
+      <div class="cover-stat-num">63.3%</div>
+      <div class="cover-stat-label">Off-Plan Market Share</div>
+    </div>
+    <div class="cover-stat">
+      <div class="cover-stat-num">+10%</div>
+      <div class="cover-stat-label">Avg Price Growth YoY</div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="page">
+
+  <!-- 01 OVERVIEW -->
+  <div class="section">
+    <div class="section-label">01 — Overview</div>
+    <div class="section-title">The Market<br><em>at a Glance</em></div>
+    <div class="section-intro">
+      2025 closed as Dubai's strongest year on record. Transaction volumes hit new highs, prices continued their multi-year ascent, and off-plan demand reshaped the buyer landscape entirely.
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-number">AED 1,850<span class="stat-unit">/ft²</span></div>
+        <div class="stat-desc">Average residential price per sq ft across Dubai in 2025</div>
+        <div class="stat-context">↑ 8.1% year on year</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">63.3<span class="stat-unit">%</span></div>
+        <div class="stat-desc">Off-plan share of all residential transactions in 2026 year-to-date</div>
+        <div class="stat-context">vs. 36.7% secondary market</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">15–20<span class="stat-unit">%</span></div>
+        <div class="stat-desc">Average annual price growth across key communities in 2024–2025</div>
+        <div class="stat-context">Some areas exceeding 30%</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">5–8<span class="stat-unit">%</span></div>
+        <div class="stat-desc">Forecast annual price appreciation for 2026 — steady, not stalling</div>
+        <div class="stat-context">Demand remains structurally strong</div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <div class="insight-text">"Dubai recorded over 200,000 residential sales transactions in 2025 — the highest in the city's history — with total value reaching AED 541.5 billion."</div>
+    </div>
+  </div>
+
+  <!-- 02 TRANSACTION VOLUME -->
+  <div class="section">
+    <div class="section-label">02 — Transaction Volume</div>
+    <div class="section-title">Title Deed vs.<br><em>Off-Plan</em></div>
+    <div class="section-intro">
+      The off-plan segment has become the dominant force in Dubai's residential market — reshaping who is buying, at what stage, and at what price point.
+    </div>
+
+    <div class="chart-container">
+      <div class="chart-title">Residential Sales Volume — Villas & Townhouses</div>
+      <div class="chart-subtitle">Title Deed vs. Oqood (Off-plan) · 2017–2026 YTD · Dubai Land Department</div>
+      <canvas id="villaVolumeChart"></canvas>
+      <div class="chart-source">Source: PropertyMonitor.ae / Dubai Land Department</div>
+    </div>
+
+    <div class="chart-container">
+      <div class="chart-title">Residential Sales Volume — Apartments</div>
+      <div class="chart-subtitle">Title Deed vs. Oqood (Off-plan) · 2017–2026 YTD · Dubai Land Department</div>
+      <canvas id="aptVolumeChart"></canvas>
+      <div class="chart-source">Source: PropertyMonitor.ae / Dubai Land Department</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 03 PRICE MOVEMENTS -->
+  <div class="section">
+    <div class="section-label">03 — Price Movement</div>
+    <div class="section-title">Where Prices<br><em>Are Moving</em></div>
+    <div class="section-intro">
+      Villa and apartment prices followed different trajectories in 2025–2026. Both asset types are rising, but the pace and drivers diverge meaningfully by community.
+    </div>
+
+    <div class="two-col">
+      <div class="chart-container">
+        <div class="chart-title">Villa Price Change</div>
+        <div class="chart-subtitle">% change 2025 vs. 2026 · Top communities</div>
+        <canvas id="villaPriceChart"></canvas>
+        <div class="chart-source">Source: PropertyMonitor.ae</div>
+      </div>
+      <div class="chart-container">
+        <div class="chart-title">Apartment Price Change</div>
+        <div class="chart-subtitle">% change 2025 vs. 2026 · Top communities</div>
+        <canvas id="aptPriceChart"></canvas>
+        <div class="chart-source">Source: PropertyMonitor.ae</div>
+      </div>
+    </div>
+
+    <div class="chart-container">
+      <div class="chart-title">Average Residential Sales Price — Monthly Trend</div>
+      <div class="chart-subtitle">Apartments · Dubai-wide · Aug 2025 – Feb 2026 · Dubai Land Department</div>
+      <canvas id="priceTrendChart"></canvas>
+      <div class="chart-source">Source: PropertyMonitor.ae / Dubai Land Department</div>
+    </div>
+  </div>
+
+  <!-- HIGHLIGHT BAND -->
+  <div class="highlight-band">
+    <div class="highlight-band-num">+68%</div>
+    <div class="highlight-band-text">
+      Villa prices in Dubai Hills Estate have climbed 68% since 2022. Off-plan villas jumped 41% in a single year. Meanwhile, rental yields are holding at 5.63% — one of the strongest combinations of income and appreciation in the city.
+    </div>
+  </div>
+
+  <!-- 04 RENTAL -->
+  <div class="section" style="margin-top: 80px;">
+    <div class="section-label">04 — Rental Market</div>
+    <div class="section-title">Yields, Demand<br><em>&amp; Occupancy</em></div>
+    <div class="section-intro">
+      Rental demand across Dubai remains structurally robust. Occupancy is rising, rents have climbed significantly since 2020, and yields in top communities continue to attract income-focused investors.
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-number">60–70<span class="stat-unit">%</span></div>
+        <div class="stat-desc">Villa rent increase across Dubai since 2020</div>
+        <div class="stat-context">Family demand driving the climb</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">~50<span class="stat-unit">%</span></div>
+        <div class="stat-desc">Apartment rent increase since 2020</div>
+        <div class="stat-context">Urban corridors leading</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">5.6<span class="stat-unit">%</span></div>
+        <div class="stat-desc">Gross rental yield in Dubai Hills Estate</div>
+        <div class="stat-context">87%+ occupancy rate</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">87<span class="stat-unit">%+</span></div>
+        <div class="stat-desc">Occupancy in top family communities</div>
+        <div class="stat-context">Up from 71% in 2020</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="chart-container">
+        <div class="chart-title">Villa Rental Change</div>
+        <div class="chart-subtitle">% change 2025 vs. 2026 · Top communities</div>
+        <canvas id="villaRentChart"></canvas>
+        <div class="chart-source">Source: PropertyMonitor.ae</div>
+      </div>
+      <div class="chart-container">
+        <div class="chart-title">Apartment Rental Change</div>
+        <div class="chart-subtitle">% change 2025 vs. 2026 · Top communities</div>
+        <canvas id="aptRentChart"></canvas>
+        <div class="chart-source">Source: PropertyMonitor.ae</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break">
+    <div class="section-break-text">Dubai Hills Estate — <em>A Closer Look</em></div>
+  </div>
+
+  <!-- 05 DUBAI HILLS -->
+  <div class="section" style="margin-top: 80px;">
+    <div class="section-label">05 — Community Spotlight</div>
+    <div class="section-title">Dubai Hills<br><em>Estate</em></div>
+    <div class="section-intro">
+      One community consistently outperforms across both capital appreciation and rental yield. Here is the data behind Dubai Hills Estate's position in the market.
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-number">+10.02<span class="stat-unit">%</span></div>
+        <div class="stat-desc">Price growth over the last 12 months in Dubai Hills</div>
+        <div class="stat-context">7.58% in last 6 months</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">+68<span class="stat-unit">%</span></div>
+        <div class="stat-desc">Secondary villa price growth since 2022</div>
+        <div class="stat-context">Off-plan villas up 59%</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">+41<span class="stat-unit">%</span></div>
+        <div class="stat-desc">Off-plan villa price jump from 2024 to Q1 2025 alone</div>
+        <div class="stat-context">AED 4,492/sqft current avg</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">5.63<span class="stat-unit">%</span></div>
+        <div class="stat-desc">Current gross investment yield</div>
+        <div class="stat-context">950+ rental transactions last quarter</div>
+      </div>
+    </div>
+
+    <div class="chart-container">
+      <div class="chart-title">Dubai Hills Estate — Price per Sq Ft Since 2022</div>
+      <div class="chart-subtitle">Secondary market · Apartments vs. Villas vs. Off-Plan Villas · AED per sq ft</div>
+      <canvas id="dhChart"></canvas>
+      <div class="chart-source">Source: PropertyMonitor.ae / Better Homes Research</div>
+    </div>
+
+    <div class="insight">
+      <div class="insight-text">At 5.63% gross yield on top of sustained capital growth, Dubai Hills is one of the few communities in Dubai delivering meaningful income and appreciation simultaneously — relevant for end-users and investors alike.</div>
+    </div>
+
+    <div class="section-label" style="margin-top: 56px;">Average Annual Rents — Dubai Hills Estate 2025</div>
+    <table class="community-table">
+      <thead>
+        <tr>
+          <th>Unit Type</th>
+          <th>Average Annual Rent</th>
+          <th>Growth Since 2020</th>
+          <th>Demand</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Studio</td>
+          <td>AED 70,000</td>
+          <td><div class="bar-inline"><div class="bar-track"><div class="bar-fill" style="width:52%"></div></div><span>~52%</span></div></td>
+          <td><span class="badge badge-up">Strong</span></td>
+        </tr>
+        <tr>
+          <td>1 Bedroom</td>
+          <td>AED 94,000</td>
+          <td><div class="bar-inline"><div class="bar-track"><div class="bar-fill" style="width:55%"></div></div><span>~55%</span></div></td>
+          <td><span class="badge badge-hot">Very High</span></td>
+        </tr>
+        <tr>
+          <td>2 Bedroom</td>
+          <td>AED 148,000</td>
+          <td><div class="bar-inline"><div class="bar-track"><div class="bar-fill" style="width:60%"></div></div><span>~60%</span></div></td>
+          <td><span class="badge badge-hot">Very High</span></td>
+        </tr>
+        <tr>
+          <td>Villa (avg)</td>
+          <td>AED 225,000+</td>
+          <td><div class="bar-inline"><div class="bar-track"><div class="bar-fill" style="width:66%"></div></div><span>~66%</span></div></td>
+          <td><span class="badge badge-up">Exceptional</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 06 OUTLOOK -->
+  <div class="section">
+    <div class="section-label">06 — 2026 Outlook</div>
+    <div class="section-title">What to<br><em>Expect Next</em></div>
+    <div class="section-intro">
+      The consensus from analysts and DLD data points to continued growth at a measured pace. Here is what the data suggests for the year ahead.
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-number">5–8<span class="stat-unit">%</span></div>
+        <div class="stat-desc">Projected annual price appreciation across Dubai in 2026</div>
+        <div class="stat-context">Moderation from 2024–25 peaks</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">↑</div>
+        <div class="stat-desc">Off-plan supply rising in 2026–2027, which may rebalance select communities</div>
+        <div class="stat-context">Watch supply pipelines carefully</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">85<span class="stat-unit">%+</span></div>
+        <div class="stat-desc">Expected occupancy in top family communities throughout 2026</div>
+        <div class="stat-context">Rental demand remains structural</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">Hold</div>
+        <div class="stat-desc">Analyst consensus for current Dubai Hills owners — strong yields + steady appreciation</div>
+        <div class="stat-context">Buy signal for long-term investors</div>
+      </div>
+    </div>
+
+    <!--<div class="insight">
+      <div class="insight-text">2026 is not 2024 — but it is not a cooling market either. The story is normalization: less explosive, more durable. For owners, asset values are holding. For buyers, the entry window is narrowing gradually, not slamming shut.</div>
+    </div>-->
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div>
+    <div class="footer-brand">better<span>homes</span></div>
+    <div style="font-size:11px; color: var(--light); margin-top:8px; letter-spacing:1px; font-weight:300;">Dubai, UAE · 2026</div>
+  </div>
+  <div class="footer-note">
+    Data sourced from Dubai Land Department, PropertyMonitor.ae, and Better Homes Research. All figures are for informational purposes only. Past performance does not guarantee future results.
+  </div>
+</div>
+
+<script>
+const CORAL = '#1f343f';
+const CORAL_L = 'rgba(192,57,43,0.15)';
+const SAND = '#D9C9B0';
+const DARK = '#1A1A1A';
+const MID = '#8A8A8A';
+const GRID = 'rgba(0,0,0,0.05)';
+const DARK2 = '#3A3A3A';
+
+Chart.defaults.color = MID;
+Chart.defaults.font.family = 'Jost';
+Chart.defaults.font.size = 11;
+Chart.defaults.font.weight = '300';
+
+const base = {
+  responsive: true,
+  maintainAspectRatio: true,
+  plugins: {
+    legend: { labels: { color: MID, boxWidth: 12, padding: 20 } },
+    tooltip: {
+      backgroundColor: '#fff',
+      borderColor: SAND,
+      borderWidth: 1,
+      titleColor: DARK,
+      bodyColor: MID,
+      padding: 12,
+      titleFont: { family: 'Epic,Inter,system-ui,sans-serif', size: 13 },
+      bodyFont: { family: 'Jost', size: 11 }
+    }
+  },
+  scales: {
+    x: { grid: { color: GRID }, ticks: { color: MID } },
+    y: { grid: { color: GRID }, ticks: { color: MID } }
+  }
+};
+
+// Villa Volume
+new Chart(document.getElementById('villaVolumeChart'), {
+  type: 'bar',
+  data: {
+    labels: ['2017','2018','2019','2020','2021','2022','2023','2024','2025','2026 YTD'],
+    datasets: [
+      { label: 'Title Deed', data: [4800,3200,3600,3200,10500,15200,16000,18500,25000,3200], backgroundColor: CORAL, borderWidth: 0, borderRadius: 2 },
+      { label: 'Off-Plan (Oqood)', data: [1200,900,1100,1000,5500,7500,8200,10000,9500,1800], backgroundColor: SAND, borderWidth: 0, borderRadius: 2 }
+    ]
+  },
+  options: base
+});
+
+// Apt Volume
+new Chart(document.getElementById('aptVolumeChart'), {
+  type: 'bar',
+  data: {
+    labels: ['2017','2018','2019','2020','2021','2022','2023','2024','2025','2026 YTD'],
+    datasets: [
+      { label: 'Title Deed', data: [18000,14000,16000,14000,28000,42000,52000,68000,38000,8000], backgroundColor: CORAL, borderWidth: 0, borderRadius: 2 },
+      { label: 'Off-Plan (Oqood)', data: [12000,10000,11000,10000,28000,62000,82000,118000,120000,14000], backgroundColor: SAND, borderWidth: 0, borderRadius: 2 }
+    ]
+  },
+  options: base
+});
+
+// Villa price change
+new Chart(document.getElementById('villaPriceChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Meydan','Palm Jum.','JVC','Arabian R.','DAMAC Hills','Dubai Hills','The Springs','Jumeirah'],
+    datasets: [{ label: '% Change', data: [31.5,20.5,19.2,16.4,14.1,10.0,6.1,4.9],
+      backgroundColor: (ctx) => ctx.raw > 15 ? CORAL : SAND, borderWidth: 0, borderRadius: 2 }]
+  },
+  options: { ...base, indexAxis: 'y',
+    plugins: { ...base.plugins, legend: { display: false } },
+    scales: { x: { grid: { color: GRID }, ticks: { color: MID, callback: v => v+'%' } }, y: { grid: { color: GRID }, ticks: { color: MID } } }
+  }
+});
+
+// Apt price change
+new Chart(document.getElementById('aptPriceChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Motor City','DIFC','JVC','Discovery G.','Business Bay','Downtown','Dubai Hills','JLT'],
+    datasets: [{ label: '% Change', data: [35.2,33.9,28.2,26.2,22.1,18.9,15.0,13.4],
+      backgroundColor: (ctx) => ctx.raw > 25 ? CORAL : SAND, borderWidth: 0, borderRadius: 2 }]
+  },
+  options: { ...base, indexAxis: 'y',
+    plugins: { ...base.plugins, legend: { display: false } },
+    scales: { x: { grid: { color: GRID }, ticks: { color: MID, callback: v => v+'%' } }, y: { grid: { color: GRID }, ticks: { color: MID } } }
+  }
+});
+
+// Monthly trend
+new Chart(document.getElementById('priceTrendChart'), {
+  type: 'line',
+  data: {
+    labels: ['Aug 2025','Sep 2025','Oct 2025','Nov 2025','Dec 2025','Jan 2026','Feb 2026'],
+    datasets: [
+      { label: 'Avg Sale Price (AED)', data: [2000000,2620000,2420000,2400000,2350000,2000000,1300000],
+        borderColor: CORAL, backgroundColor: CORAL_L, fill: true, tension: 0.4, pointBackgroundColor: CORAL, pointRadius: 5 },
+      { label: 'Transactions (Title Deed)', data: [8400,7900,8100,8100,8500,8500,8900],
+        borderColor: SAND, backgroundColor: 'rgba(217,201,176,0.2)', fill: false, tension: 0.4,
+        pointBackgroundColor: SAND, pointRadius: 5, yAxisID: 'y1' }
+    ]
+  },
+  options: { ...base,
+    scales: {
+      x: { grid: { color: GRID }, ticks: { color: MID } },
+      y: { grid: { color: GRID }, ticks: { color: MID, callback: v => 'AED '+(v/1000000).toFixed(1)+'M' } },
+      y1: { position: 'right', grid: { display: false }, ticks: { color: MID, callback: v => v.toLocaleString() } }
+    }
+  }
+});
+
+// Villa rent change
+new Chart(document.getElementById('villaRentChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Arabian R.','DAMAC Hills','Palm Jum.','Dubai Hills','Jumeirah','Mirdif'],
+    datasets: [{ label: '% Change', data: [38.2,19.2,10.9,7.2,7.6,4.2],
+      backgroundColor: (ctx) => ctx.raw > 15 ? CORAL : SAND, borderWidth: 0, borderRadius: 2 }]
+  },
+  options: { ...base, indexAxis: 'y',
+    plugins: { ...base.plugins, legend: { display: false } },
+    scales: { x: { grid: { color: GRID }, ticks: { color: MID, callback: v => v+'%' } }, y: { grid: { color: GRID }, ticks: { color: MID } } }
+  }
+});
+
+// Apt rent change
+new Chart(document.getElementById('aptRentChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Al Barari','Business Bay','Downtown','JVC','Dubai Hills','Marina','JLT'],
+    datasets: [{ label: '% Change', data: [53.1,20.6,20.0,14.9,10.2,7.2,6.5],
+      backgroundColor: (ctx) => ctx.raw > 15 ? CORAL : SAND, borderWidth: 0, borderRadius: 2 }]
+  },
+  options: { ...base, indexAxis: 'y',
+    plugins: { ...base.plugins, legend: { display: false } },
+    scales: { x: { grid: { color: GRID }, ticks: { color: MID, callback: v => v+'%' } }, y: { grid: { color: GRID }, ticks: { color: MID } } }
+  }
+});
+
+// Dubai Hills price/sqft
+new Chart(document.getElementById('dhChart'), {
+  type: 'line',
+  data: {
+    labels: ['2022','2023','2024','Q1 2025'],
+    datasets: [
+      { label: 'Secondary Apartments', data: [1505,1780,2050,2183],
+        borderColor: SAND, backgroundColor: 'rgba(217,201,176,0.15)', fill: true, tension: 0.3, pointBackgroundColor: SAND, pointRadius: 7 },
+      { label: 'Secondary Villas', data: [1630,2100,2500,2738],
+        borderColor: CORAL, backgroundColor: CORAL_L, fill: true, tension: 0.3, pointBackgroundColor: CORAL, pointRadius: 7 },
+      { label: 'Off-Plan Villas', data: [2829,3100,3185,4492],
+        borderColor: DARK2, backgroundColor: 'transparent', fill: false, tension: 0.3,
+        borderDash: [6,3], pointBackgroundColor: DARK2, pointRadius: 7 }
+    ]
+  },
+  options: { ...base,
+    scales: {
+      x: { grid: { color: GRID }, ticks: { color: MID } },
+      y: { grid: { color: GRID }, ticks: { color: MID, callback: v => 'AED '+v.toLocaleString() } }
+    }
+  }
+});
+</script>
+</body>
+</html>
